@@ -49,11 +49,11 @@ app = FastAPI()
 def index():
     return JSONResponse(content={"status": "OK"}, status_code=200)
 
-@app.post("/extract")
+
+@app.post("/extract", response_model=ModelOutput, status_code=200)
 def extract(user_input: UserInput):
     extracted_data = model.invoke({"user_input": user_input.text})
-    return JSONResponse(content=extracted_data, status_code=200)
-
+    return extracted_data
 
 if __name__ == "__main__":
     uvicorn.run(app=app, host="0.0.0.0", port=8000)
